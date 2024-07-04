@@ -12,33 +12,39 @@ def home():
 
 
 @app.route("/blog/<pk>")
-def blog(pk):
-    with open(f"blog{pk}.json") as f:
+def blog_detail(pk):
+    with open(f"db/blog{pk}.json", "r") as f:
         data = json.load(f)
+    return render_template("blog.html", **data)
 
-    return render_template(f"blog.html", **data)
+
+@app.route("/blogs")
+def blogs():
+    c = len(os.listdir("db"))
+    return render_template("blogs.html", count=c)
 
 
 @app.route("/user/<username>")
 def hello(username):
     return f"<h3> Hello {username} </h3>"
 
-
-@app.route("/calculate", methods=["GET", "POST"])
-def calculate():
+@app.route("/new-blog", methods=("GET", "POST"))
+def new_blog():
     if request.method == "GET":
-        return render_template("calculate.html")
+        return render_template("new-blog.html")
     else:
-        a1 = request.form.get("a1")
-        a2 = request.form.get("a2")
-        action = request.form.get("action")
-        a1, a2 = int(a1), int(a2)
-        match action:
-            case "add":
-                result = a1 + a2
-            case "sub":
-                result = a1 - a2
-        return render_template("calculate.html", natija=result)
+        title = request.form.get("title")
+        body = request.form.get("body")
+        data = {
+            "title": title,
+            "body": body
+        }
+        c = len(os.listdir("db"))
+        with open(f"db/blog{c + 1}.json", "w") as f:
+            json.dump(data, f)
+        message = "Blog successfully created"
+        c += 1
+        return render_template("blogs.html", message=message, count=c)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Blog 1</title>
+</head>
+
+<body>
+    <h3>Blog list</h3>
+    {% if message %}
+        <p>{{message}}</p>
+    {% endif %}
+
+    <ul>
+         {% if count != 0 %}
+            {% for c in range(1, count+1) %}
+                 <li><a href="blog/{{c}}">blog{{c}}</a></li>
+
+            {% endfor %}
+        {% else %}
+             <li>No Blog</li>
+        {% endif %}
+    </ul>
+
+    <a href="new-blog" type="button">New Blog</a>
+
+</body>
+
+
+</html>
