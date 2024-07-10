@@ -1,51 +1,40 @@
-import json
-import os
-
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, flash, redirect, url_for
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
+app.config.from_object("config.Config")
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+bcrypt = Bcrypt(app)
+import forms
+import models
 
 
-@app.route("/")
+@app.route("/", )
 def home():
-    return render_template("home.html")
+    return render_template("home.html", )
 
 
-@app.route("/blog/<pk>")
-def blog_detail(pk):
-    with open(f"db/blog{pk}.json", "r") as f:
-        data = json.load(f)
-    return render_template("blog.html", **data)
+@app.route("/login", )
+def login():
+    return render_template("auth/login.html", )
 
 
-@app.route("/blogs")
-def blogs():
-    c = len(os.listdir("db"))
-    return render_template("blogs.html", count=c)
-
-
-@app.route("/user/<username>")
-def hello(username):
-    return f"<h3> Hello {username} </h3>"
-
-@app.route("/new-blog", methods=("GET", "POST"))
-def new_blog():
-    if request.method == "GET":
-        return render_template("new-blog.html")
-    else:
-        title = request.form.get("title")
-        body = request.form.get("body")
-        data = {
-            "title": title,
-            "body": body
-        }
-        c = len(os.listdir("db"))
-        with open(f"db/blog{c + 1}.json", "w") as f:
-            json.dump(data, f)
-        message = "Blog successfully created"
-        c += 1
-        return render_template("blogs.html", message=message, count=c)
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    form = forms.RegistrationForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+        user = models.User(username=form.username.data, password=hashed_password, email=form.email.data,
+                           phone=form.phone.data)
+        db.session.add(user)
+        db.session.commit()
+        flash("User  successfully registered", "success")
+        return redirect(url_for("login"))
+    return render_template("auth/register.html", form=form)
 
 
 if __name__ == '__main__':
-    app.run(host="127.0.0.1", debug=True)
+    app.run(debug=True)

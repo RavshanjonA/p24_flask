@@ -1,3 +1,7 @@
-### 1.calculate : +, -, *, /, %, **
+flask db init
+flask db migrate -m "initial migrate"
+flask db upgrade
 
-### 2.blog yaratish va bloglarni jsondan oqish
+### Blog modelini qurish, create_all()
+
+### blog-list, blog-detail blog-delete  yozish
