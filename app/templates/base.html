@@ -19,29 +19,33 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
+                {% if session.get('username') %}
+                    <a class="nav-item nav-link" href="{{ url_for('my_blog') }}">{{session.get('username')}}</a>
+                    <a class="nav-item nav-link" href="{{ url_for('new_blog') }}">new blog</a>
+                    <a class="nav-item nav-link" href="{{ url_for('log_out') }}">log out</a>
+
+                {% else %}
                 <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
                 <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+                {% endif %}
             </div>
         </div>
     </nav>
     <div>
         {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        {% if category == 'message' %}
-        <div class="alert alert-warning" role="alert">
-            {% else %}
-            <div class="alert alert-{{ category }}" role="alert">
-            {% endif %}
-                {{ message }}
-            </div>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
-        </div>
-        {% block content %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{category}}" role="alert">
+                        {{ message }}
+                    </div>
 
-        {% endblock %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
     </div>
+    {% block content %}
+
+    {% endblock %}
+</div>
 </body>
 </html>
