@@ -12,3 +12,5 @@ secret_key = os.getenv("SECRET_KEY")
 class Config:
     SQLALCHEMY_DATABASE_URI = f"postgresql://{user}:{password}@localhost:5432/{database}"
     SECRET_KEY = secret_key
+    UPLOAD_FOLDER=os.getenv("UPLOAD_FOLDER")
+
