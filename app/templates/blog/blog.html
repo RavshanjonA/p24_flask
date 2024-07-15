@@ -8,6 +8,14 @@
     <div class="card-body">
         <h5 class="card-title">{{post.title}}</h5>
         <p class="card-text"> {{post.body}}</p>
+        <form action="{{ url_for('post_like', slug=post.slug) }}">
+            {% if post.id | is_like(session.get('user_id')) %}
+            <button type="submit" class="bi bi-hand-thumbs-up-fill">UnLike</button>
+            {% else %}
+            <button type="submit" class="bi bi-hand-thumbs-up">Like</button>
+            {% endif %}
+        </form>
+
     </div>
 
 </div>

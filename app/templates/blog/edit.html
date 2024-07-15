@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %} Edit Blog {% endblock %}
+{% block content %}
+<h3>Edit Blog Page</h3>
+<form method="post" enctype="multipart/form-data">
+    <p>{{form.title.label}}: {{form.title()}}</p>
+    {% if form.title.errors %}
+        {% for error in form.title.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+    {% endif %}
+    <p>{{form.body.label}}: {{form.body()}}</p>
+    {% if form.body.errors %}
+        {% for error in form.body.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+    {% endif %}
+    <p>{{form.image.label}}: {{form.image()}}</p>
+    <p>Old Picture: {{post.image_url}}</p>
+    {% if form.image.errors %}
+        {% for error in form.image.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+    {% endif %}
+    {{ form.submit()}}
+    {{ form.hidden_tag() }}
+
+</form>
+
+{% endblock %}

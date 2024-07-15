@@ -7,7 +7,8 @@
 <div class="card" >
     <div class="card-body">
         <h5 class="card-title">{{post.title}}</h5>
-            <a href="{{ url_for('blog_detial',pk=post.id) }}" class="btn btn-primary">more..</a>
+            <a href="{{ url_for('blog_detial',slug=post.slug) }}" class="btn btn-primary">more..</a>
+            <a href="{{ url_for('blog_update',slug=post.slug) }}" class="btn btn-info">Edit</a>
     </div>
 
 </div>

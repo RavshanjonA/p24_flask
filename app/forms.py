@@ -46,4 +46,4 @@ class PostForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired(), Length(min=10, max=512)])
     body = TextAreaField("Body", validators=[DataRequired()])
     image = FileField("Image", validators=[FileRequired(), FileAllowed(['jpg', 'png', 'jpeg'], "File type must be image !!! ")])
-    submit = SubmitField("Create", validators=[DataRequired()])
+    submit = SubmitField("Save", validators=[DataRequired()])

@@ -17,4 +17,4 @@ if not os.path.exists(os.getenv("UPLOAD_FOLDER")):
     os.makedirs(os.getenv("UPLOAD_FOLDER"))
 
 
-from app import routes
+from app import routes, template_filters, errorhandlers

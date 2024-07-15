@@ -2,5 +2,5 @@ flask db init
 flask db migrate -m "initial migrate"
 flask db upgrade
 
-### 1. User bloglar bomasi h3"You don't have any blogs"
-### 2. User boshqa userlarni bloglarini korolmasin @access decorator yarating
+### 1. login qilgan paytda 3marta xato parol kirita olsin 3tadan kopayib ketsin bloklasin, Admin emailini chiqaring
+### 2. togri login parol bilan kiritilsa ham is_active bolmasa you account is blocked degan xabar chiqarisin
