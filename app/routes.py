@@ -6,6 +6,7 @@ from app import app, bcrypt, db
 from app.decorators import login_required
 from app.forms import RegistrationForm, LoginForm, PostForm
 from app.models import User, Post, Like
+from app.tasks import send_notification_author
 from app.utils import save_image
 
 
@@ -124,6 +125,7 @@ def post_like(slug):
             db.session.add(like)
             db.session.commit()
             flash(f"Liked post: {post.title}")
+            send_notification_author.delay(title=post.title, email=user.email)
         except Exception as e:
             flash(f"Error accoured: {e}")
     return redirect(url_for("blog_detial", slug=post.slug))

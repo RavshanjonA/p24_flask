@@ -2,5 +2,5 @@ flask db init
 flask db migrate -m "initial migrate"
 flask db upgrade
 
-### 1. login qilgan paytda 3marta xato parol kirita olsin 3tadan kopayib ketsin bloklasin, Admin emailini chiqaring.
-### 2. togri login parol bilan kiritilsa ham is_active bolmasa you account is blocked degan xabar chiqarisin.
+### 1. user modelidagi 2ta field qoshamiz code va is_active=False
+### 2. register qilgan paytda random code olib user userni kiritgan emailiga yuboramiz login qilmoqchi bolsa
